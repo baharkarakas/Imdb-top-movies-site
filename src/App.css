@@ -1,0 +1,68 @@
+/* Base Styles */
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+/* Navigation Styles */
+.header-nav {
+  display: flex;
+  align-items: center;
+  background-color: #222; /* Lighter than black */
+  padding: 10px 20px;
+  gap: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  position: relative; /* Needed for absolute positioning */
+}
+
+/* Logo Styles */
+.nav--logo {
+  max-width: 80px;
+}
+
+@media (max-width: 768px) {
+  .nav--logo {
+    max-width: 60px;
+  }
+}
+
+/* Title Styles */
+h1 {
+  color: #f5c518; /* IMDb yellow */
+  font-size: 2rem; /* Adjust font size to match IMDb style */
+  margin-right: auto; /* Pushes the search bar to the end */
+  font-weight: 700;
+  flex: 1; /* Allows the title to take up available space */
+}
+
+/* Search Bar Styles */
+.search-bar {
+  margin-left: auto; /* Pushes the search bar to the end */
+  margin-right: 100px; /* Adds more space at the end of the navbar */
+  max-width: 250px; /* Adjust to control the max width */
+  flex: 0 1 auto; /* Prevents it from growing but allows it to shrink */
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 1rem;
+  border-radius: 20px;
+  border: 1px solid #444;
+  background-color: #333;
+  color: #fff;
+  outline: none;
+}
+
+.search-bar input::placeholder {
+  color: #bbb;
+}
+
+.search-bar input:focus {
+  border-color: #f5c518;
+}
