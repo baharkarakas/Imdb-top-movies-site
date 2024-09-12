@@ -14,7 +14,7 @@
   align-items: flex-start;
   text-align: left;
   position: relative;
-  padding: 0; /* No padding */
+  padding: 0;
   background-color: #2c2c2c;
   border-radius: 4px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
@@ -22,22 +22,21 @@
 }
 
 .movie-img {
-  display: block; /* Ensures no extra space around the image */
+  display: block;
   max-width: 100%;
   height: auto;
-  /* margin-bottom: 15px; */
 }
 
 .text-box {
-  padding: 15px; /* Padding around the text */
-  width: calc(100% - 20px); /* Account for space from the left */
-  margin-left: 20px; /* Space from the left */
+  padding: 15px;
+  width: calc(100% - 20px);
+  margin-left: 20px;
 }
 
 .rating {
   display: flex;
   align-items: center;
-  margin-bottom: 10px; /* Space between rating and title */
+  margin-bottom: 10px;
   position: relative;
   width: 100%;
 }
@@ -57,7 +56,7 @@
   font-size: 15px;
   font-weight: bold;
   color: #e0e0e0;
-  margin: 15px 0 10px 0; /* Increased space below the title */
+  margin: 15px 0 10px 0;
   text-align: left;
   width: 100%;
 }

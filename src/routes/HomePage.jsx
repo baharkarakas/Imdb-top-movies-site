@@ -29,7 +29,7 @@ function HomePage() {
           setFilteredMovies((prevMovies) => [
             ...prevMovies,
             ...res.data.results,
-          ]); // Initialize filteredMovies
+          ]);
           fetchedPages.current = [...fetchedPages.current, page];
           setHasMoreMovies(res.data.page < res.data.total_pages);
         }

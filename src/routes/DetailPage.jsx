@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import "./DetailPage.css"; // Ensure you import your CSS file
+import "./DetailPage.css";
 
 function DetailPage() {
   const { id } = useParams();
@@ -23,7 +23,7 @@ function DetailPage() {
     fetchMovieDetails();
   }, [id]);
 
-  if (!movie) return null; // Only render when movie data is available
+  if (!movie) return null;
 
   return (
     <div className="detail-container">
