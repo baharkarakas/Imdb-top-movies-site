@@ -11,25 +11,38 @@ function HomePage() {
   const [isNavbarHidden, setIsNavbarHidden] = useState(false);
   const [hasMoreMovies, setHasMoreMovies] = useState(true);
   const fetchedPages = useRef([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     async function getMovies() {
       try {
-        const res = await axios.get(
-          `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc`,
-          {
-            headers: {
-              Authorization: "Bearer YOUR_API_KEY",
-            },
-          }
-        );
+        const queryParam = searchQuery
+          ? `&query=${encodeURIComponent(searchQuery)}`
+          : "";
+        const url = searchQuery
+          ? `https://api.themoviedb.org/3/search/movie?include_adult=false&language=en-US&page=${page}${queryParam}`
+          : `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc`;
+
+        const res = await axios.get(url, {
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4N2EzNmQxNzdiZDc2NTc1NjQ2OWM2ZmFlNjdlYWEzZCIsIm5iZiI6MTcyNjEyMjUwNi43NjI5MjUsInN1YiI6IjY2ZDg1Nzc0MWJmMGY4M2YzZThmMDZiOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.OjlKvw2iLEcsxCMAOglfmztNd2ut51Q1jnul68g3mLY",
+          },
+        });
+
+        console.log(res.data);
 
         if (!fetchedPages.current.includes(page)) {
-          setMovies((prevMovies) => [...prevMovies, ...res.data.results]);
-          setFilteredMovies((prevMovies) => [
-            ...prevMovies,
-            ...res.data.results,
-          ]);
+          if (page === 1) {
+            setMovies(res.data.results);
+            setFilteredMovies(res.data.results);
+          } else {
+            setMovies((prevMovies) => [...prevMovies, ...res.data.results]);
+            setFilteredMovies((prevMovies) => [
+              ...prevMovies,
+              ...res.data.results,
+            ]);
+          }
           fetchedPages.current = [...fetchedPages.current, page];
           setHasMoreMovies(res.data.page < res.data.total_pages);
         }
@@ -37,33 +50,19 @@ function HomePage() {
         console.error("Error fetching movies:", error);
       }
     }
+
     getMovies();
-
-    function handleScroll() {
-      if (window.scrollY > 50) {
-        setIsNavbarHidden(true);
-      } else {
-        setIsNavbarHidden(false);
-      }
-    }
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [page]);
+  }, [page, searchQuery]);
 
   const loadMoreMovies = () => {
     setPage((prevPage) => prevPage + 1);
   };
 
   const handleSearch = (query) => {
-    const lowercasedQuery = query.toLowerCase();
-    const filtered = movies.filter((movie) =>
-      movie.original_title.toLowerCase().includes(lowercasedQuery)
-    );
-    setFilteredMovies(filtered);
+    setSearchQuery(query);
+    setPage(1);
+    fetchedPages.current = [];
+    setMovies([]);
   };
 
   return (
